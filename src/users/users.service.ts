@@ -138,11 +138,11 @@ export class UsersService {
     return { success: true };
   }
 
-  async getUserByUsername(userName: string) {
+  async getUserByUsername(userName: UpdateUserDto) {
     const user = this.userRepository
       .createQueryBuilder('user')
       .where('user.username LIKE :username', {
-        username: `%${userName}%`,
+        username: `%${userName.username}%`,
       })
       .leftJoinAndSelect('user.booking', 'booking')
       .getOne();

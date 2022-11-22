@@ -106,8 +106,9 @@ export class UsersController {
     return this.userService.createBooking(bookingInfo, authorizedData);
   }
 
-  @Get('/booking/:users')
-  getUserByUsername(@Param('users') username: string) {
-    return this.userService.getUserByUsername(username);
+  @Get('/booking')
+  getUserByUsername(@Headers('authorization') header) {
+    const authorizedData = this.localStraetgy.decodeJWTToken({ token: header });
+    return this.userService.getUserByUsername(authorizedData);
   }
 }
