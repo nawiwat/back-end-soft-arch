@@ -15,10 +15,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  // @Get(':user_Id')
-  // getUser(@Param('user_Id') user_Id: string) {
-  //   return this.appService.getUser(user_Id);
-  // }
+  @Get('/cheapHotel')
+  getCheapHotel() {
+    return this.appService.getCheapHotel();
+  }
 
   // @Post()
   // create(@Body() createUserDto: CreateUserDto) {

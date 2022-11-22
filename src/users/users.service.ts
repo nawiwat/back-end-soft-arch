@@ -4,6 +4,7 @@ import { User as UserEntity } from '../entities/user.entity';
 import {
   CreateUserDto,
   getUserByDecode,
+  resetName,
   UpdateUserDto,
   userProfile,
 } from '../dto/create-user.dto';
@@ -96,5 +97,10 @@ export class UsersService {
     profile.name = (await user).name;
     profile.phone = (await user).phone;
     return profile;
+  }
+
+  async resetname(newname: resetName) {
+    await this.userRepository.save(newname);
+    return { success: true };
   }
 }

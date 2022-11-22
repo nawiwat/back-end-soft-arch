@@ -13,4 +13,7 @@ export class AppService {
   //     .leftJoin('User.user_Profile', 'user_Id')
   //     .select(user_Id);
   // }
+  async getCheapHotel() {
+    return 0;
+  }
 }

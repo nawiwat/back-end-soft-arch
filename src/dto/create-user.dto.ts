@@ -83,3 +83,11 @@ export class getUserByDecode {
   @Column()
   exp: string;
 }
+
+export class resetName {
+  @Column()
+  name: string;
+
+  @Column()
+  phone: string;
+}

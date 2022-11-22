@@ -19,7 +19,11 @@ import {
 } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { User } from '../entities/user.entity';
-import { CreateUserDto, UpdateUserDto } from '../dto/create-user.dto';
+import {
+  CreateUserDto,
+  resetName,
+  UpdateUserDto,
+} from '../dto/create-user.dto';
 import { UserNotFoundException } from '../auth/UserNotFound.exception';
 import { HttpExceptionFilter } from '../auth/HttpException.filter';
 import { SerializedUser } from '../auth/index';
@@ -78,6 +82,11 @@ export class UsersController {
       ...authorizedData,
     };
     return this.userService.updateUser(updateUserBody);
+  }
+
+  @Put('/resetname')
+  resetname(@Body() reset: resetName) {
+    return this.userService.resetname(reset);
   }
 
   @Get('/profile/:Token')

@@ -26,6 +26,9 @@ export class Hotel {
   @Column()
   hotelInfo: string;
 
+  @Column()
+  farFromMe: number;
+
   @OneToMany(() => Hotel_Offer, (hotelOffer) => hotelOffer.hotel, {
     cascade: true,
   })
