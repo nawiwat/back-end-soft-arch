@@ -15,7 +15,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('/hotelNearMe')
+  @Get('/hotelnearme')
   getNearHotel() {
     return this.appService.getNearHotel();
   }
@@ -23,6 +23,11 @@ export class AppController {
   @Get('/search/:value')
   searchHotel(@Param('value') value: string) {
     return this.appService.searhHotel(value);
+  }
+
+  @Get('/cheaphotel')
+  getCheapHotel() {
+    return this.appService.getCheapHotel();
   }
 
   // @Post()

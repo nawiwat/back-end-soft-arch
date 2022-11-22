@@ -24,7 +24,11 @@ export class AppService {
       .createQueryBuilder('hotel')
       .orderBy('hotel.farFromMe', 'ASC')
       .getMany();
-    return list;
+    const lowerlist = [];
+    for (let i = 0; i < 3; i++) {
+      lowerlist[i] = list[i];
+    }
+    return lowerlist;
   }
 
   async searhHotel(value: string) {
@@ -34,6 +38,22 @@ export class AppService {
         hotelName: `%${value}%`,
       })
       .getMany();
-    return list;
+    const lowerlist = [];
+    for (let i = 0; i < 3; i++) {
+      lowerlist[i] = list[i];
+    }
+    return lowerlist;
+  }
+
+  async getCheapHotel() {
+    const list = await this.hotelRepository
+      .createQueryBuilder('hotel')
+      .orderBy('hotel.price', 'ASC')
+      .getMany();
+    const lowerlist = [];
+    for (let i = 0; i < 3; i++) {
+      lowerlist[i] = list[i];
+    }
+    return lowerlist;
   }
 }
