@@ -108,7 +108,7 @@ export class UsersService {
         username: `%${user.username}%`,
       })
       .getOne();
-    const Id = await (await user2).id;
+    const Id = (await user2).id;
     await this.userRepository.update(Id, newname);
     return { success: true };
   }
