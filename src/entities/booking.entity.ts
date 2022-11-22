@@ -12,8 +12,8 @@ import { User } from './user.entity';
 
 @Entity()
 export class Booking {
-  @PrimaryGeneratedColumn('uuid')
-  bookingId: string;
+  @PrimaryGeneratedColumn()
+  bookingId: number;
 
   @Column()
   firstName: string;
