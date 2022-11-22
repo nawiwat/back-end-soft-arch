@@ -85,8 +85,9 @@ export class UsersController {
   }
 
   @Put('/resetname')
-  resetname(@Body() reset: resetName) {
-    return this.userService.resetname(reset);
+  resetname(@Headers('authorization') header, @Body() reset: resetName) {
+    const authorizedData = this.localStraetgy.decodeJWTToken({ token: header });
+    return this.userService.resetname(reset, authorizedData);
   }
 
   @Get('/profile/:Token')

@@ -99,8 +99,17 @@ export class UsersService {
     return profile;
   }
 
-  async resetname(newname: resetName) {
-    await this.userRepository.save(newname);
+  async resetname(newname: resetName, authorizedData: UpdateUserDto) {
+    const user = new userProfile();
+    user.username = (await authorizedData).username;
+    const user2 = this.userRepository
+      .createQueryBuilder('user')
+      .where('user.username LIKE :username', {
+        username: `%${user.username}%`,
+      })
+      .getOne();
+    const Id = await (await user2).id;
+    await this.userRepository.update(Id, newname);
     return { success: true };
   }
 }
