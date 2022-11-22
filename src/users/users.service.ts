@@ -11,7 +11,8 @@ import {
 import { SerializedUser, User } from '../auth/index';
 import { Repository } from 'typeorm';
 import { comparePasswords, encodePassword } from '../auth/bcrypt';
-import { LocalStraetgy } from 'src/auth/LocalStrategy';
+import { createBookingDto } from 'src/dto/booking.dto';
+import { Booking } from 'src/entities/booking.entity';
 
 @Injectable()
 export class UsersService {
@@ -19,6 +20,8 @@ export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(Booking)
+    private bookingRepository: Repository<Booking>,
   ) {}
   //private readonly localStraetgy: LocalStraetgy,
 
@@ -111,5 +114,38 @@ export class UsersService {
     const Id = (await user2).id;
     await this.userRepository.update(Id, newname);
     return { success: true };
+  }
+
+  async createBooking(
+    bookingInfo: createBookingDto,
+    authorizedData: UpdateUserDto,
+  ) {
+    const user = new UserEntity();
+    user.username = authorizedData.username;
+    const userToAdd = this.userRepository
+      .createQueryBuilder('user')
+      .where('user.username LIKE :username', {
+        username: `%${user.username}%`,
+      })
+      .getOne();
+    const newBooking = new Booking();
+    newBooking.firstName = bookingInfo.firstName;
+    newBooking.lastName = bookingInfo.lastName;
+    newBooking.phone = bookingInfo.phone;
+    newBooking.email = bookingInfo.email;
+    newBooking.user = await userToAdd;
+    await this.bookingRepository.save(newBooking);
+    return { success: true };
+  }
+
+  async getUserByUsername(userName: string) {
+    const user = this.userRepository
+      .createQueryBuilder('user')
+      .where('user.username LIKE :username', {
+        username: `%${userName}%`,
+      })
+      .leftJoinAndSelect('user.booking', 'booking')
+      .getOne();
+    return user;
   }
 }

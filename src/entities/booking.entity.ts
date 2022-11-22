@@ -16,13 +16,22 @@ export class Booking {
   bookingId: string;
 
   @Column()
-  roomId: string;
+  firstName: string;
+
+  @Column()
+  lastName: string;
 
   @Column()
   checkIn: string;
 
   @Column()
   checkOut: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  phone: string;
 
   @OneToOne(() => Room, (room) => room.booking)
   @JoinColumn({ name: 'room_Id' })

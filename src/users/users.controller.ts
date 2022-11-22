@@ -29,6 +29,7 @@ import { HttpExceptionFilter } from '../auth/HttpException.filter';
 import { SerializedUser } from '../auth/index';
 import { UsersService } from '../users/users.service';
 import { LocalStraetgy } from '../auth/LocalStrategy';
+import { createBookingDto } from 'src/dto/booking.dto';
 
 @Controller('users')
 export class UsersController {
@@ -94,5 +95,19 @@ export class UsersController {
   getUserProfile(@Param('Token') Token: string) {
     const rawProfile = this.localStraetgy.decodeJWTToken({ token: Token });
     return this.userService.getUserProfile(rawProfile);
+  }
+
+  @Post('/booking')
+  createBooking(
+    @Headers('authorization') header,
+    @Body() bookingInfo: createBookingDto,
+  ) {
+    const authorizedData = this.localStraetgy.decodeJWTToken({ token: header });
+    return this.userService.createBooking(bookingInfo, authorizedData);
+  }
+
+  @Get('/booking/:users')
+  getUserByUsername(@Param('users') username: string) {
+    return this.userService.getUserByUsername(username);
   }
 }

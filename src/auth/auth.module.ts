@@ -10,6 +10,7 @@ import { LocalStraetgy } from './LocalStrategy';
 import { UsersModule } from '../users/users.module';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { AppService } from 'src/app.service';
+import { Booking } from 'src/entities/booking.entity';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { AppService } from 'src/app.service';
         expiresIn: '1d',
       },
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Booking]),
   ],
   controllers: [AuthController],
   providers: [

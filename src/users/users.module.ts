@@ -6,6 +6,7 @@ import { UsersService } from './users.service';
 import { LocalStraetgy } from '../auth/LocalStrategy';
 import { AuthService } from '../auth/auth.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { Booking } from 'src/entities/booking.entity';
 @Module({
   imports: [
     JwtModule.register({
@@ -14,7 +15,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
         expiresIn: '1d',
       },
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Booking]),
   ],
   controllers: [UsersController],
   providers: [
